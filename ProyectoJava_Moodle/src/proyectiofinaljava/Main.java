@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 
 /**
  *
- * @author mateo
+ * @author juan
  */
 import javafx.application.Application;
 import javafx.scene.Scene;
