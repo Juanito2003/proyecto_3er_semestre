@@ -6,7 +6,7 @@ package proyectiofinaljava;
 
 /**
  *
- * @author mateo
+ * @author juan
  */
 import java.time.LocalDate;
 
