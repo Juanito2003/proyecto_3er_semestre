@@ -1,7 +1,7 @@
 package proyectiofinaljava;
 /**
  *
- * @author mateo
+ * @author juan
  */
 import java.io.File;
 import java.io.FileInputStream;
