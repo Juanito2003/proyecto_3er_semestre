@@ -2,7 +2,7 @@ package proyectiofinaljava;
 
 /**
  *
- * @author mateo
+ * @author juan
  */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
