@@ -3,7 +3,7 @@ package proyectiofinaljava;
 
 /**
  *
- * @author mateo
+ * @author juan
  */
 import javax.swing.*;
 import java.awt.*;
