@@ -10,6 +10,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javax.swing.Box;
@@ -163,7 +168,7 @@ public class Editar extends JFrame {
             String cellRange = primeraColumna + primeraFila + ":" + ultimaColumna + ultimaFila;
 
             try {
-                String filePath = "src/archivo/Actividades.xlsx";
+                String filePath = Rutas.EXCEL_ACTIVIDADES;
                 return leerCeldas(filePath, hoja, cellRange);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -281,7 +286,7 @@ public class Editar extends JFrame {
             String cellRange = primeraColumna + primeraFila + ":" + ultimaColumna + ultimaFila;
 
             try {
-                String filePath = "src/archivo/Actividades.xlsx";
+                String filePath = Rutas.EXCEL_ACTIVIDADES;
                 escribirCeldas(filePath, hoja, cellRange, data);
                 JOptionPane.showMessageDialog(this, "Guardado exitoso.");
             } catch (Exception e) {
@@ -292,7 +297,12 @@ public class Editar extends JFrame {
     }
 
     private void escribirCeldas(String filePath, String sheetName, String cellRange, Object[][] data) throws Exception {
-        try (FileInputStream fileInputStream = new FileInputStream(filePath); Workbook workbook = new XSSFWorkbook(fileInputStream); FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+        Path destino = Paths.get(filePath).toAbsolutePath();
+        Path temporal = destino.resolveSibling(destino.getFileName() + ".tmp");
+
+        // Se lee el libro entero antes de escribir y se guarda primero en un archivo
+        // temporal: si algo falla a mitad, el Excel original queda intacto.
+        try (FileInputStream fileInputStream = new FileInputStream(destino.toFile()); Workbook workbook = new XSSFWorkbook(fileInputStream)) {
 
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -322,8 +332,16 @@ public class Editar extends JFrame {
                 }
             }
 
-            workbook.write(fileOutputStream);
+            try (FileOutputStream fileOutputStream = new FileOutputStream(temporal.toFile())) {
+                workbook.write(fileOutputStream);
+            }
+            try {
+                Files.move(temporal, destino, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException e) {
+                Files.move(temporal, destino, StandardCopyOption.REPLACE_EXISTING);
+            }
         } catch (Exception e) {
+            Files.deleteIfExists(temporal);
             throw new Exception("Error al escribir en el archivo Excel.", e);
         }
     }

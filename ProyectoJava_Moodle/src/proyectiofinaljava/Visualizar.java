@@ -99,7 +99,7 @@ public class Visualizar extends JFrame {
             String cellRange = primeraColumna + primeraFila + ":" + ultimaColumna + ultimaFila;
 
             try {
-                String filePath = "src/archivo/Actividades.xlsx";
+                String filePath = Rutas.EXCEL_ACTIVIDADES;
                 return leerCeldas(filePath, hoja, cellRange);
             } catch (Exception e) {
                 e.printStackTrace();

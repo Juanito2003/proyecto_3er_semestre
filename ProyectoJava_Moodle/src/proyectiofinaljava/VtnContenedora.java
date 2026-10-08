@@ -19,10 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Optional;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.JLabel;
 import jfxtras.scene.control.CalendarPicker;
 
 public class VtnContenedora extends Application {
@@ -122,10 +122,8 @@ public class VtnContenedora extends Application {
         panelIzquierdo.getChildren().add(arbolCursos);
         panelPrincipal.setLeft(panelIzquierdo);
 
-        String rutaImagen = "C:\\Users\\juanm\\OneDrive\\Documentos\\NetBeansProjects\\ProyectioFinalJava_1_2_4_3_2_1_1\\src\\archivo\\Uno.jpg";
-
-        // Cargar la imagen desde la ubicación absoluta
-        Image imagen = new Image("file:" + rutaImagen);
+        // Cargar la imagen desde los recursos del proyecto (funciona en cualquier equipo)
+        Image imagen = cargarImagen("/archivo/Uno.jpg");
 
         // Crear el ImageView con la imagen cargada
         ImageView imageView = new ImageView(imagen);
@@ -137,12 +135,6 @@ public class VtnContenedora extends Application {
         double alturaDeseada = 500; // Cambia este valor a la altura deseada
         imageView.setFitHeight(alturaDeseada);
         imageView.setPreserveRatio(true); // Mantener la relación de aspecto
-
-        // Crear un VBox y agregar el ImageView
-        VBox vbox = new VBox(imageView);
-
-        // Crear una escena y agregar el VBox
-        Scene scene = new Scene(vbox, 400, 300);
 
         panelCentral = new VBox(imageView);
         panelCentral.setStyle("-fx-background-color: #f4f4f4;");
@@ -305,8 +297,10 @@ public class VtnContenedora extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Image iconImage = new Image("C:\\Users\\juanm\\OneDrive\\Documentos\\NetBeansProjects\\ProyectioFinalJava_1_2_4_3_2_1_1\\src\\archivo\\Dos.jpg"); // Ruta absoluta del icono
-        primaryStage.getIcons().add(iconImage);
+        Image iconImage = cargarImagen("/archivo/Dos.jpg");
+        if (iconImage != null) {
+            primaryStage.getIcons().add(iconImage);
+        }
 
         primaryStage.setTitle("Plantain");
         primaryStage.setScene(new Scene(panelPrincipal, 1300, 600));
@@ -318,6 +312,16 @@ public class VtnContenedora extends Application {
         });
 
         primaryStage.show();
+    }
+
+    // Carga una imagen del classpath; devuelve null si no existe en lugar de lanzar una excepción
+    private static Image cargarImagen(String recurso) {
+        URL url = VtnContenedora.class.getResource(recurso);
+        if (url == null) {
+            System.err.println("No se encontró la imagen " + recurso);
+            return null;
+        }
+        return new Image(url.toExternalForm());
     }
 
     public void setNombreUsuario(String nombreUsuario) {
