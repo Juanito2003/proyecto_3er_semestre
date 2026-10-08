@@ -1,0 +1,11 @@
+# NetBeans / Ant
+ProyectoJava_Moodle/build/
+ProyectoJava_Moodle/dist/
+ProyectoJava_Moodle/nbproject/private/
+
+# Archivos temporales
+*.class
+*.tmp
+~$*.xlsx
+.DS_Store
+Thumbs.db
