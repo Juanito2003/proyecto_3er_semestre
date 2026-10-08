@@ -1,26 +1,58 @@
-Proyecto:
-Plataforma de Gestión de Deberes y Lecciones
+# Plantain — aula virtual de escritorio
 
-Descripción:
-Este proyecto es una aplicación web diseñada como parte de nuestro proyecto universitario de fin de semestre. La plataforma está inspirada en sistemas de gestión del aprendizaje como Moodle, pero se enfoca principalmente en proporcionar una interfaz eficiente para que tanto estudiantes como profesores puedan ver y gestionar sus deberes y lecciones pendientes.
+Proyecto universitario de fin de tercer semestre: una aplicación de escritorio inspirada en Moodle para organizar cursos, materias y la planificación semanal de actividades.
 
-Funcionalidades Principales
-- Inicio de Sesión: Los usuarios pueden iniciar sesión como estudiantes o profesores.
-- Panel de Estudiantes: Los estudiantes pueden ver una lista de sus deberes y lecciones pendientes, así como también las fechas de vencimiento.
-- Panel de Profesores: Los profesores pueden crear, editar y eliminar deberes y lecciones, asignar fechas de vencimiento y ver el progreso de los estudiantes.
-- Notificaciones: Los usuarios reciben notificaciones sobre nuevos deberes asignados, cambios en las fechas de vencimiento, etc.
+Hecha en **Java** con **JavaFX** para la ventana principal y **Swing** para las ventanas de planificación. Los datos se guardan en un libro de **Excel** que se lee y escribe con **Apache POI**.
 
-Tecnologías Utilizadas:
-- Lenguaje de Programación: Java.
-- Interfaz Gráfica de Usuario (GUI): JavaFX.
-- Persistencia de Datos: Archivos de texto plano (por ejemplo, CSV).
-- Autenticación: Implementación propia con encriptación de contraseñas.
-- Notificaciones: Ventanas emergentes o mensajes en la interfaz de usuario.
+## Funcionalidades
 
+- **Inicio de sesión** con un diálogo de usuario y contraseña.
+- **Árbol de cursos y materias** editable con el botón derecho: cambiar nombre, añadir y eliminar.
+- **Planificación semanal** (16 semanas) de cada materia:
+  - *Visualizar*: muestra la tabla de la semana elegida (día, horas, unidad, contenidos, actividades, evaluación y fecha).
+  - *Editar*: permite modificar la tabla y guardar los cambios en el Excel.
+- **Calendario** para consultar fechas (JFXtras `CalendarPicker`).
+- **Aviso de actividad**: si hay una actividad planificada para hoy, aparece un aviso en el panel lateral.
+- **Notas pendientes**: lista con menú contextual para añadir, ver y modificar notas.
 
-Instalación y Uso
-- Clona este repositorio en tu máquina local.
-- Abre el proyecto en tu IDE de Java preferido.
-- Compila y ejecuta la aplicación desde el archivo principal.
-- Inicia sesión como estudiante o profesor utilizando las credenciales de prueba proporcionadas.
-- Explora las funcionalidades de la aplicación, como ver los deberes pendientes, crear nuevas tareas, etc.
+## Tecnologías
+
+| | |
+|---|---|
+| Lenguaje | Java 19 |
+| Interfaz | JavaFX y Swing |
+| Componentes extra | JFXtras (`jfxtras-controls`) |
+| Datos | Excel (`.xlsx`) con Apache POI |
+| Proyecto | NetBeans (Ant) |
+
+## Estructura
+
+```
+ProyectoJava_Moodle/
+├── src/proyectiofinaljava/
+│   ├── Main.java            Arranque e inicio de sesión
+│   ├── VtnContenedora.java  Ventana principal (cursos, calendario, notas, avisos)
+│   ├── Visualizar.java      Consulta de la planificación semanal
+│   ├── Editar.java          Edición y guardado de la planificación
+│   ├── Notificaciones.java  Lectura de fechas y aviso de actividades del día
+│   ├── Actividad.java       Modelo de actividad
+│   └── Rutas.java           Rutas de los archivos de datos
+└── src/archivo/
+    ├── Actividades.xlsx     Planificación: una hoja por semana
+    └── Uno.jpg, Dos.jpg     Imagen de portada e icono
+```
+
+## Cómo ejecutarlo
+
+1. Abre la carpeta `ProyectoJava_Moodle` como proyecto en **NetBeans** con un JDK 19 o superior.
+2. En *Tools → Libraries* define las bibliotecas que usa el proyecto: **JavaFX** (SDK de OpenJFX), **JFXtras** (`jfxtras-controls`) y **POI** / **POI-ooxml** (Apache POI 5).
+3. Ejecuta el proyecto (clase principal `proyectiofinaljava.Main`).
+4. Inicia sesión con el usuario de prueba **`usuario`** y la contraseña **`1234`**.
+
+El Excel se abre con una ruta relativa a la carpeta del proyecto, así que la aplicación debe ejecutarse desde ahí (es lo que hace NetBeans por defecto).
+
+## Limitaciones conocidas
+
+- El inicio de sesión es de demostración: un único usuario con la contraseña en el código, sin roles de alumno y profesor.
+- Las notas pendientes y los cambios en el árbol de cursos no se guardan al cerrar.
+- La planificación solo está enlazada a la materia *Estructura de Datos*.
