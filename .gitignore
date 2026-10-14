@@ -1,7 +1,10 @@
-# NetBeans / Ant
-ProyectoJava_Moodle/build/
-ProyectoJava_Moodle/dist/
-ProyectoJava_Moodle/nbproject/private/
+# Maven
+ProyectoJava_Moodle/target/
+
+# NetBeans
+nbproject/private/
+nb-configuration.xml
+nbactions.xml
 
 # Archivos temporales
 *.class
