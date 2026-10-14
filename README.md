@@ -23,33 +23,40 @@ Hecha en **Java** con **JavaFX** para la ventana principal y **Swing** para las 
 | Interfaz | JavaFX y Swing |
 | Componentes extra | JFXtras (`jfxtras-controls`) |
 | Datos | Excel (`.xlsx`) con Apache POI |
-| Proyecto | NetBeans (Ant) |
+| Proyecto | Maven |
 
 ## Estructura
 
 ```
 ProyectoJava_Moodle/
-├── src/proyectiofinaljava/
-│   ├── Main.java            Arranque e inicio de sesión
-│   ├── VtnContenedora.java  Ventana principal (cursos, calendario, notas, avisos)
-│   ├── Visualizar.java      Consulta de la planificación semanal
-│   ├── Editar.java          Edición y guardado de la planificación
-│   ├── Notificaciones.java  Lectura de fechas y aviso de actividades del día
-│   ├── Actividad.java       Modelo de actividad
-│   └── Rutas.java           Rutas de los archivos de datos
-└── src/archivo/
-    ├── Actividades.xlsx     Planificación: una hoja por semana
-    └── Uno.jpg, Dos.jpg     Imagen de portada e icono
+├── pom.xml                      Dependencias y arranque con Maven
+├── datos/
+│   └── Actividades.xlsx         Planificación: una hoja por semana (la app la lee y la modifica)
+└── src/main/
+    ├── java/proyectiofinaljava/
+    │   ├── Main.java            Arranque e inicio de sesión
+    │   ├── VtnContenedora.java  Ventana principal (cursos, calendario, notas, avisos)
+    │   ├── Visualizar.java      Consulta de la planificación semanal
+    │   ├── Editar.java          Edición y guardado de la planificación
+    │   ├── Notificaciones.java  Lectura de fechas y aviso de actividades del día
+    │   ├── Actividad.java       Modelo de actividad
+    │   └── Rutas.java           Rutas de los archivos de datos
+    └── resources/archivo/
+        └── Uno.jpg, Dos.jpg     Imagen de portada e icono
 ```
 
 ## Cómo ejecutarlo
 
-1. Abre la carpeta `ProyectoJava_Moodle` como proyecto en **NetBeans** con un JDK 19 o superior.
-2. En *Tools → Libraries* define las bibliotecas que usa el proyecto: **JavaFX** (SDK de OpenJFX), **JFXtras** (`jfxtras-controls`) y **POI** / **POI-ooxml** (Apache POI 5).
-3. Ejecuta el proyecto (clase principal `proyectiofinaljava.Main`).
-4. Inicia sesión con el usuario de prueba **`usuario`** y la contraseña **`1234`**.
+Hace falta un **JDK 17 o superior** y **Maven**. Las dependencias (JavaFX, JFXtras y Apache POI) se descargan solas la primera vez.
 
-El Excel se abre con una ruta relativa a la carpeta del proyecto, así que la aplicación debe ejecutarse desde ahí (es lo que hace NetBeans por defecto).
+```bash
+cd ProyectoJava_Moodle
+mvn javafx:run
+```
+
+Inicia sesión con el usuario de prueba **`usuario`** y la contraseña **`1234`**.
+
+También se puede abrir la carpeta `ProyectoJava_Moodle` en NetBeans, IntelliJ IDEA o VS Code como proyecto Maven y ejecutar `proyectiofinaljava.Main`. El Excel se abre con una ruta relativa (`datos/Actividades.xlsx`), así que el directorio de trabajo tiene que ser `ProyectoJava_Moodle`, que es lo que hacen Maven y los IDE por defecto.
 
 ## Limitaciones conocidas
 
