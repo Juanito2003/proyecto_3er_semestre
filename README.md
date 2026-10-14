@@ -15,7 +15,7 @@ Hecha en **Java** con **JavaFX** para la ventana principal y **Swing** para las 
   - *Editar*: permite modificar la tabla y guardar los cambios en el Excel.
 - **Calendario** para consultar fechas (JFXtras `CalendarPicker`).
 - **Aviso de actividad**: si hay una actividad planificada para hoy, aparece un aviso en el panel lateral.
-- **Notas pendientes**: lista con menú contextual para añadir, ver y modificar notas.
+- **Notas pendientes**: lista con menú contextual para añadir, ver y modificar notas. Se guardan en `datos/notas.txt` y siguen ahí al volver a abrir la aplicación.
 
 ## Tecnologías
 
@@ -33,7 +33,8 @@ Hecha en **Java** con **JavaFX** para la ventana principal y **Swing** para las 
 ProyectoJava_Moodle/
 ├── pom.xml                      Dependencias y arranque con Maven
 ├── datos/
-│   └── Actividades.xlsx         Planificación: una hoja por semana (la app la lee y la modifica)
+│   ├── Actividades.xlsx         Planificación: una hoja por semana (la app la lee y la modifica)
+│   └── notas.txt                Notas pendientes (se crea con la primera nota; no se sube al repo)
 └── src/main/
     ├── java/proyectiofinaljava/
     │   ├── Main.java            Arranque e inicio de sesión
@@ -42,6 +43,7 @@ ProyectoJava_Moodle/
     │   ├── Editar.java          Edición y guardado de la planificación
     │   ├── Notificaciones.java  Lectura de fechas y aviso de actividades del día
     │   ├── Actividad.java       Modelo de actividad
+    │   ├── NotasPendientes.java Guardar y cargar las notas pendientes
     │   └── Rutas.java           Rutas de los archivos de datos
     └── resources/archivo/
         └── Uno.jpg, Dos.jpg     Imagen de portada e icono
@@ -69,10 +71,10 @@ cd ProyectoJava_Moodle
 mvn test
 ```
 
-Los tests de `NotificacionesTest` crean Excel pequeños en una carpeta temporal y comprueban la lectura de fechas: fecha de hoy como texto y con formato de fecha de Excel, otro día, celdas vacías, textos que no son fechas, archivo inexistente y que leer el Excel no lo modifica. GitHub Actions los ejecuta en cada push y pull request.
+`NotasPendientesTest` comprueba que las notas se guardan y se vuelven a cargar igual (orden, tildes, líneas en blanco, carpeta que no existe). Los tests de `NotificacionesTest` crean Excel pequeños en una carpeta temporal y comprueban la lectura de fechas: fecha de hoy como texto y con formato de fecha de Excel, otro día, celdas vacías, textos que no son fechas, archivo inexistente y que leer el Excel no lo modifica. GitHub Actions los ejecuta en cada push y pull request.
 
 ## Limitaciones conocidas
 
 - El inicio de sesión es de demostración: un único usuario con la contraseña en el código, sin roles de alumno y profesor.
-- Las notas pendientes y los cambios en el árbol de cursos no se guardan al cerrar.
+- Los cambios en el árbol de cursos no se guardan al cerrar.
 - La planificación solo está enlazada a la materia *Estructura de Datos*.
