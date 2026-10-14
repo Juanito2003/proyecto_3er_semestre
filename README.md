@@ -1,5 +1,7 @@
 # Plantain — aula virtual de escritorio
 
+[![Tests](https://github.com/Juanito2003/proyecto_3er_semestre/actions/workflows/tests.yml/badge.svg)](https://github.com/Juanito2003/proyecto_3er_semestre/actions/workflows/tests.yml)
+
 Proyecto universitario de fin de tercer semestre: una aplicación de escritorio inspirada en Moodle para organizar cursos, materias y la planificación semanal de actividades.
 
 Hecha en **Java** con **JavaFX** para la ventana principal y **Swing** para las ventanas de planificación. Los datos se guardan en un libro de **Excel** que se lee y escribe con **Apache POI**.
@@ -45,6 +47,8 @@ ProyectoJava_Moodle/
         └── Uno.jpg, Dos.jpg     Imagen de portada e icono
 ```
 
+Los tests están en `src/test/java/proyectiofinaljava/`.
+
 ## Cómo ejecutarlo
 
 Hace falta un **JDK 17 o superior** y **Maven**. Las dependencias (JavaFX, JFXtras y Apache POI) se descargan solas la primera vez.
@@ -57,6 +61,15 @@ mvn javafx:run
 Inicia sesión con el usuario de prueba **`usuario`** y la contraseña **`1234`**.
 
 También se puede abrir la carpeta `ProyectoJava_Moodle` en NetBeans, IntelliJ IDEA o VS Code como proyecto Maven y ejecutar `proyectiofinaljava.Main`. El Excel se abre con una ruta relativa (`datos/Actividades.xlsx`), así que el directorio de trabajo tiene que ser `ProyectoJava_Moodle`, que es lo que hacen Maven y los IDE por defecto.
+
+## Tests
+
+```bash
+cd ProyectoJava_Moodle
+mvn test
+```
+
+Los tests de `NotificacionesTest` crean Excel pequeños en una carpeta temporal y comprueban la lectura de fechas: fecha de hoy como texto y con formato de fecha de Excel, otro día, celdas vacías, textos que no son fechas, archivo inexistente y que leer el Excel no lo modifica. GitHub Actions los ejecuta en cada push y pull request.
 
 ## Limitaciones conocidas
 
