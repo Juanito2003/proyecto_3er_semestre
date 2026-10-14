@@ -14,6 +14,9 @@ public final class Rutas {
 
     public static final String EXCEL_ACTIVIDADES = "datos/Actividades.xlsx";
 
+    /** Notas pendientes del panel inferior, una por línea. */
+    public static final String NOTAS_PENDIENTES = "datos/notas.txt";
+
     private Rutas() {
     }
 }
