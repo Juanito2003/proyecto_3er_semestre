@@ -20,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,6 +45,8 @@ public class VtnContenedora extends Application {
     private ListView<String> listaNotasPendientes;
 
     private String nombreUsuario;
+
+    private static final Path ARCHIVO_NOTAS = Paths.get(Rutas.NOTAS_PENDIENTES);
 
     public VtnContenedora() {
         panelPrincipal = new BorderPane();
@@ -230,6 +234,7 @@ public class VtnContenedora extends Application {
         etiquetaNotas.setFont(new Font("Arial", 18));
 
         listaNotasPendientes = new ListView<>();
+        listaNotasPendientes.getItems().addAll(NotasPendientes.cargar(ARCHIVO_NOTAS));
         listaNotasPendientes.setStyle("-fx-font-size: 16;");
 
         ContextMenu contextMenuActividades = new ContextMenu();
@@ -266,6 +271,7 @@ public class VtnContenedora extends Application {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(activityName -> {
             listaNotasPendientes.getItems().add(activityName);
+            guardarNotas();
         });
     }
 
@@ -291,6 +297,7 @@ public class VtnContenedora extends Application {
             result.ifPresent(newName -> {
                 int selectedIndex = listaNotasPendientes.getSelectionModel().getSelectedIndex();
                 listaNotasPendientes.getItems().set(selectedIndex, newName);
+                guardarNotas();
             });
         }
     }
@@ -311,7 +318,14 @@ public class VtnContenedora extends Application {
             }
         });
 
+        // Por si quedara algún cambio sin guardar, se guarda también al cerrar
+        primaryStage.setOnCloseRequest(event -> guardarNotas());
+
         primaryStage.show();
+    }
+
+    private void guardarNotas() {
+        NotasPendientes.guardar(ARCHIVO_NOTAS, listaNotasPendientes.getItems());
     }
 
     // Carga una imagen del classpath; devuelve null si no existe en lugar de lanzar una excepción
