@@ -1,0 +1,26 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  maven:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ProyectoJava_Moodle
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          cache-dependency-path: ProyectoJava_Moodle/pom.xml
+      - name: Compilar y ejecutar los tests
+        run: mvn -B test
