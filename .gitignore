@@ -12,3 +12,6 @@ nbactions.xml
 ~$*.xlsx
 .DS_Store
 Thumbs.db
+
+# Notas pendientes de cada usuario
+ProyectoJava_Moodle/datos/notas.txt
