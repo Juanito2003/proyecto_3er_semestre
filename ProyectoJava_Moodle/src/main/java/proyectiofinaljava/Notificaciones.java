@@ -5,6 +5,7 @@ package proyectiofinaljava;
  * @author juan
  */
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -34,7 +35,10 @@ public class Notificaciones {
     public Notificaciones(File archivo) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("d 'de' MMMM yyyy", new Locale("es", "ES"));
 
-        try (XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
+        // Se abre desde un FileInputStream y no desde el File: con un File, Apache POI
+        // abre el libro en lectura y escritura y al cerrarlo lo vuelve a guardar en disco.
+        try (FileInputStream entrada = new FileInputStream(archivo);
+             XSSFWorkbook libro = new XSSFWorkbook(entrada)) {
             // Recorre todas las hojas (una por semana) y salta la cabecera
             for (int m = 0; m < libro.getNumberOfSheets(); m++) {
                 XSSFSheet hoja = libro.getSheetAt(m);
